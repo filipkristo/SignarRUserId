@@ -19,8 +19,8 @@ namespace SirnalRUserId
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            var idProvider = new PrincipalUserIdProvider();
-            GlobalHost.DependencyResolver.Register(typeof(IUserIdProvider), () => idProvider);
+            //var idProvider = new PrincipalUserIdProvider();
+            //GlobalHost.DependencyResolver.Register(typeof(IUserIdProvider), () => idProvider);
         }
     }
 }
