@@ -42,13 +42,14 @@ namespace SirnalRUserId.Controllers
         public ActionResult Chat()
         {
             var users = UserManager.Users.ToList();            
-
-            var context = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
+            
             var userName = User.Identity.Name;
             var userId = User.Identity.GetUserId();
 
-            ViewBag.Users = new SelectList(users, users.Where(x => x.Id == userId).FirstOrDefault());
+            ViewBag.Users = new SelectList(users, "Id", "Username");
 
+            // Za potrebe testiranja
+            var context = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
             if (context != null)
             {
                 var obj = new UserViewModel()
@@ -61,7 +62,6 @@ namespace SirnalRUserId.Controllers
                 context.Clients.User(userId).addNewMessageToPage(obj);
             }
                 
-
             return View();
         }
 

@@ -9,7 +9,6 @@ namespace SirnalRUserId.Models
     {
         public String UserId { get; set; }
         public String Name { get; set; }
-        public String Message { get; set; }
-
+        public String Message { get; set; }        
     }
 }

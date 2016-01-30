@@ -4,10 +4,19 @@
     ViewBag.Title = "Chat";
 }
 <h2>Chat</h2>
-<div class="container">
+
+<div class="row">
+    <label>User</label>
+</div>
+
+<div class="row">    
+    @Html.DropDownList("Users", (SelectList)ViewBag.Users)
+</div>
+<br />
+<div class="container">    
     <input type="text" id="message" />
     <input type="button" id="sendmessage" value="Send" />
-    <input type="hidden" id="displayname" value="@User.Identity.GetUserId()" />
+    <input type="hidden" id="displayname" value="@User.Identity.Name" />
     <ul id="discussion"></ul>
 </div>
 @section scripts {
@@ -35,9 +44,13 @@
             $.connection.hub.start().done(function () {
                 $('#sendmessage').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.send($('#displayname').val(), $('#message').val());
-                    // Clear text box and reset focus for next comment.
-                    $('#message').val('').focus();
+                    chat.server.send($('#Users').val(), $('#message').val());                    
+
+                    $('#discussion').append('<li><strong>' + $('#displayname').val()
+                    + '</strong>: ' + htmlEncode($('#message').val()) + '</li>');
+
+                    // Clear text box and reset focus for next comment.                    
+                    $('#message').val('').focus();                    
                 });
 
                 

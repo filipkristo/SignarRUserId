@@ -11,20 +11,22 @@ namespace SirnalRUserId.Hubs
 {
     [Authorize()]
     public class ChatHub : Hub
-    {        
-        public void Send(String UserId, String Message)
+    {
+        // Ako želimo spremati trenutne sesije imamo ovdje dva primjera (in-memory i permental(external) storage)  
+        //http://www.asp.net/signalr/overview/guide-to-the-api/mapping-users-to-connections        
+        public void Send(String who, String Message)
         {
-            var UserId2 = Context.User.Identity.GetUserId();
+            var UserId = Context.User.Identity.GetUserId();
             var Username = Context.User.Identity.Name;
 
             var obj = new UserViewModel()
             {
-                UserId = UserId2,
+                UserId = UserId,
                 Message = Message,
-                Name = Username
+                Name = Username,                
             };
 
-            Clients.User(UserId).addNewMessageToPage(obj);
+            Clients.User(who).addNewMessageToPage(obj);
         }
 
         public override Task OnConnected()
